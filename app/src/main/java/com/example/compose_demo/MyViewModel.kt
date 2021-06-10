@@ -30,7 +30,6 @@ class MyViewModel : ViewModel() {
             val type = object : TypeToken<List<PhoneNum>>() {}.type
             val data: List<PhoneNum> = Gson().fromJson(reader, type)
             Log.d("phone-list", data.toString())
-            delay(3000)
             _phoneNumList.postValue(data)
         }
     }
@@ -42,10 +41,18 @@ class MyViewModel : ViewModel() {
     fun findPhoneNumList(input: String) {
         Log.d("findPhoneNumList", "invoke")
         viewModelScope.launch(Dispatchers.IO) {
-            val list =
-                _phoneNumList.value!!.filter { it.name.indexOf(input) != -1 || it.abb.indexOf(input) != -1 }
-            Log.d("findPhoneNumList", "list.size=${list.size}")
-            _searchPNList.postValue(list)
+            if (input.isBlank() || input.isEmpty()) {
+                _searchPNList.postValue(emptyList())
+            } else {
+                val list =
+                    _phoneNumList.value!!.filter {
+                        it.name.indexOf(input) != -1 || it.abb.indexOf(
+                            input
+                        ) != -1
+                    }
+                Log.d("findPhoneNumList", "list.size=${list.size}")
+                _searchPNList.postValue(list)
+            }
         }
     }
 

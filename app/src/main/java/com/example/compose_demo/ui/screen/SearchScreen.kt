@@ -23,6 +23,7 @@ import com.example.compose_demo.ui.theme.*
 fun SearchScreen(
     result: List<PhoneNum>,
     search: (String) -> Unit,
+    clear: () -> Unit,
     back: () -> Unit,
     toCall: (data: PhoneNum) -> Unit
 ) {
@@ -30,7 +31,7 @@ fun SearchScreen(
         modifier = Modifier
             .fillMaxSize()
     ) {
-        SearchView(search, back)
+        SearchView(search, clear, back)
         Divider(
             Modifier
                 .fillMaxWidth()
@@ -41,7 +42,7 @@ fun SearchScreen(
 }
 
 @Composable
-fun SearchView(search: (String) -> Unit, back: () -> Unit) {
+fun SearchView(search: (String) -> Unit, clear: () -> Unit, back: () -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth(1f)
@@ -89,6 +90,10 @@ fun SearchView(search: (String) -> Unit, back: () -> Unit) {
                 contentDescription = "Clear",
                 modifier = Modifier
                     .size(12.dp)
+                    .clickable {
+                        clear()
+                        name = ""
+                    }
             )
             Spacer(Modifier.size(16.dp))
             Divider(Modifier.size(1.dp, 10.dp))
@@ -105,6 +110,6 @@ fun SearchView(search: (String) -> Unit, back: () -> Unit) {
 @Composable
 fun DefaultPreview() {
     Compose_demoTheme {
-        SearchScreen(List(10) { PhoneNum("aaa", "ccc") }, {}, {}, {})
+        SearchScreen(List(10) { PhoneNum("aaa", "ccc") }, {}, {}, {}, {})
     }
 }

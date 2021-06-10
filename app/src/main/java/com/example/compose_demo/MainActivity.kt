@@ -49,6 +49,7 @@ class MainActivity : ComponentActivity() {
                             SearchScreen(
                                 list.value,
                                 { data -> vm.findPhoneNumList(data) },
+                                { vm.cleanSearch() },
                                 { navController.backToIndex() },
                                 { data ->
                                     navController.toCall()

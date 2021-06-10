@@ -25,14 +25,14 @@ fun IndexScreen(list: List<PhoneNum>, toSearch: () -> Unit, toCall: (data:PhoneN
                 .fillMaxSize()
                 .padding(20.dp, 0.dp)
         ) {
-            MyTopBar(onClick = { toSearch() })
+            MyTopBar()
             MyNumSearcher(toSearch)
             PhoneNumList(list, toCall)
         }
 }
 
 @Composable
-fun MyTopBar(onClick: () -> Unit) {
+fun MyTopBar() {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -45,13 +45,6 @@ fun MyTopBar(onClick: () -> Unit) {
             textAlign = TextAlign.Start,
             modifier = Modifier.weight(1f)
         )
-        Button(
-            onClick = { onClick() },
-            modifier = Modifier.size(40.dp, 25.dp),
-            contentPadding = PaddingValues(0.dp)
-        ) {
-            Text(text = "下页", fontSize = 12.sp, textAlign = TextAlign.Center)
-        }
     }
 }
 
